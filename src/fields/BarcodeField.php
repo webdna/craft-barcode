@@ -79,7 +79,12 @@ class BarcodeField extends Field
      */
     public function normalizeValue($value, ElementInterface $element = null)
     {
-        return $value;
+		$type = explode('\\',get_class($element));
+		$type = strtolower(end($type));
+		$number = Craft::$app->getView()->renderString($this->property, [$type=>$element]);
+		$value = Barcode::$plugin->service->generateSVG($number);
+		
+		return $value;
     }
 
     /**
@@ -112,12 +117,9 @@ class BarcodeField extends Field
     {
         // Register our asset bundle
 		// Craft::$app->getView()->registerAssetBundle(BarcodeFieldFieldAsset::class);
-		if (!$value) {
-			$type = explode('\\',get_class($element));
-			$type = strtolower(end($type));
-			$number = Craft::$app->getView()->renderString($this->property, [$type=>$element]);
-			$value = Barcode::$plugin->service->generateSVG($number);
-		}
+		/*if (!$value) {
+			
+		}*/
 
         // Get our id and namespace
         $id = Craft::$app->getView()->formatInputId($this->handle);
