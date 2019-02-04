@@ -1,0 +1,41 @@
+{
+	"name": "kuriousagency/barcode",
+	"description": "Generate a barcode",
+	"type": "craft-plugin",
+	"version": "0.0.1",
+	"keywords": [
+		"craft",
+		"cms",
+		"craftcms",
+		"craft-plugin",
+		"barcode"
+	],
+	"support": {
+		"docs": "https://github.com/kuriousagency/craft-barcode/blob/master/README.md",
+		"issues": "https://github.com/kuriousagency/craft-barcode/issues"
+	},
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Kurious Agency",
+			"homepage": "https://kurious.agency"
+		}
+	],
+	"require": {
+		"craftcms/cms": "^3.0.0-RC1",
+		"picqer/php-barcode-generator": "^0.3.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"kuriousagency\\barcode\\": "src/"
+		}
+	},
+	"extra": {
+		"name": "Barcode",
+		"handle": "barcode",
+		"hasCpSettings": false,
+		"hasCpSection": false,
+		"changelogUrl": "https://raw.githubusercontent.com/kuriousagency/craft-barcode/master/CHANGELOG.md",
+		"class": "kuriousagency\\barcode\\Barcode"
+	}
+}
