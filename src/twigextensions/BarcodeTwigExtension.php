@@ -57,12 +57,17 @@ class BarcodeTwigExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function generate($number, $type='EAN13', $width=2, $height=30, $color='#000000')
+    public function generate($number, $format="svg", $type='EAN13', $width=2, $height=30, $color='#000000')
     {
         if (!$number) {
 			return '';
 		}
 
-		return Barcode::$plugin->service->generate($number, $type, $width, $height, $color);
+		if ($format == 'svg') {
+			return Barcode::$plugin->service->generateSVG($number, $type, $width, $height, $color);
+		}
+		if ($format == 'png') {
+			return Barcode::$plugin->service->generatePNG($number, $type, $width, $height, $color);
+		}
     }
 }

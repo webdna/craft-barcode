@@ -33,10 +33,11 @@ This allows the generation of a barcode via a fieldtype, variable or twig filter
 All instances of barcode accept the following parameters:
 
 1. **Code**: number or alphanumeric depending on the barcode type.
-2. **Type**: see below for all accepted types (default: EAN13)
-3. **Width** factor: this set with width factor of the bars (default: 2)
-4. **Height**: the in pixels of the bars (default: 30)
-5. **Color**: the hex value of the bars (default: '#000000')
+2. **Format**: svg or png (default: svg)
+3. **Type**: see below for all accepted types (default: EAN13)
+4. **Width** factor: this set with width factor of the bars (default: 2)
+5. **Height**: the in pixels of the bars (default: 30)
+6. **Color**: the hex value of the bars (default: '#000000')
 
 ## Using Barcode
 
@@ -45,7 +46,7 @@ Twig variables:
 ```
     {{ craft.barcode.generate(123456789) }}
 
-    {{ craft.barcode.generate(123456789, 'EAN13', 2, 30, '#000000') }}
+    {{ craft.barcode.generate(123456789, 'png', 'EAN13', 2, 30, '#000000') }}
 ```
 
 Twig Filters:
@@ -53,7 +54,7 @@ Twig Filters:
 ```
     {{ 123456789|barcode }}
 
-    {{ 123456789|barcode('EAN13', 2, 30, '#000000') }}
+    {{ 123456789|barcode('png', 'EAN13', 2, 30, '#000000') }}
 ```
 
 ## Supported Barcode Types

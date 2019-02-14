@@ -2,7 +2,7 @@
 	"name": "kuriousagency/barcode",
 	"description": "Generate a barcode",
 	"type": "craft-plugin",
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"keywords": [
 		"craft",
 		"cms",
