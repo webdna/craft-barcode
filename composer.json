@@ -2,7 +2,7 @@
 	"name": "kuriousagency/barcode",
 	"description": "Generate a barcode",
 	"type": "craft-plugin",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"keywords": [
 		"craft",
 		"cms",
@@ -11,14 +11,14 @@
 		"barcode"
 	],
 	"support": {
-		"docs": "https://github.com/kuriousagency/craft-barcode/blob/master/README.md",
-		"issues": "https://github.com/kuriousagency/craft-barcode/issues"
+		"docs": "https://github.com/webdna/craft-barcode/blob/master/README.md",
+		"issues": "https://github.com/webdna/craft-barcode/issues"
 	},
 	"license": "MIT",
 	"authors": [
 		{
-			"name": "Kurious Agency",
-			"homepage": "https://kurious.agency"
+			"name": "WebDNA",
+			"homepage": "https://webdna.co.uk"
 		}
 	],
 	"require": {
@@ -35,7 +35,7 @@
 		"handle": "barcode",
 		"hasCpSettings": false,
 		"hasCpSection": false,
-		"changelogUrl": "https://raw.githubusercontent.com/kuriousagency/craft-barcode/master/CHANGELOG.md",
+		"changelogUrl": "https://raw.githubusercontent.com/webdna/craft-barcode/master/CHANGELOG.md",
 		"class": "kuriousagency\\barcode\\Barcode"
 	}
 }
