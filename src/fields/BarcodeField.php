@@ -4,14 +4,14 @@
  *
  * Generate a barcode
  *
- * @link      https://kurious.agency
- * @copyright Copyright (c) 2019 Kurious Agency
+ * @link      https://webdna.co.uk
+ * @copyright Copyright (c) 2019 webdna
  */
 
-namespace kuriousagency\barcode\fields;
+namespace webdna\barcode\fields;
 
-use kuriousagency\barcode\Barcode;
-// use kuriousagency\barcode\assetbundles\barcodefieldfield\BarcodeFieldFieldAsset;
+use webdna\barcode\Barcode;
+// use webdna\barcode\assetbundles\barcodefieldfield\BarcodeFieldFieldAsset;
 
 use Craft;
 use craft\base\ElementInterface;
@@ -21,7 +21,7 @@ use yii\db\Schema;
 use craft\helpers\Json;
 
 /**
- * @author    Kurious Agency
+ * @author    webdna
  * @package   Barcode
  * @since     0.0.1
  */
@@ -33,11 +33,11 @@ class BarcodeField extends Field
     /**
      * @var string
      */
-	public $property;
-	public $type = 'EAN13';
-	public $width = 2;
-	public $height = 30;
-	public $color = "#000000";
+    public $property;
+    public $type = 'EAN13';
+    public $width = 2;
+    public $height = 30;
+    public $color = "#000000";
 
     // Static Methods
     // =========================================================================
@@ -51,17 +51,17 @@ class BarcodeField extends Field
     }
 
     // Public Methods
-	// =========================================================================
+    // =========================================================================
 
     /**
      * @inheritdoc
      */
-    public function rules()
+    public function rules(): array
     {
         $rules = parent::rules();
         $rules = array_merge($rules, [
-			['property', 'string'],
-			['property', 'required'],
+            ['property', 'string'],
+            ['property', 'required'],
         ]);
         return $rules;
     }
@@ -77,20 +77,20 @@ class BarcodeField extends Field
     /**
      * @inheritdoc
      */
-    public function normalizeValue($value, ElementInterface $element = null)
+    public function normalizeValue($value, ElementInterface $element = null): mixed
     {
-		$type = explode('\\',get_class($element));
-		$type = strtolower(end($type));
-		$number = Craft::$app->getView()->renderString($this->property, [$type=>$element]);
-		$value = Barcode::$plugin->service->generateSVG($number);
-		
-		return $value;
+        $type = explode('\\',get_class($element));
+        $type = strtolower(end($type));
+        $number = Craft::$app->getView()->renderString($this->property, [$type=>$element]);
+        $value = Barcode::$plugin->service->generateSVG($number);
+
+        return $value;
     }
 
     /**
      * @inheritdoc
      */
-    public function serializeValue($value, ElementInterface $element = null)
+    public function serializeValue($value, ElementInterface $element = null): mixed
     {
         return parent::serializeValue($value, $element);
     }
@@ -98,14 +98,14 @@ class BarcodeField extends Field
     /**
      * @inheritdoc
      */
-    public function getSettingsHtml()
+    public function getSettingsHtml(): ?string
     {
-		// Render the settings template
+        // Render the settings template
         return Craft::$app->getView()->renderTemplate(
             'barcode/_components/fields/BarcodeField_settings',
             [
-				'field' => $this,
-				'types' => Barcode::$plugin->service->getTypes(),
+                'field' => $this,
+                'types' => Barcode::$plugin->service->getTypes(),
             ]
         );
     }
@@ -116,10 +116,10 @@ class BarcodeField extends Field
     public function getInputHtml($value, ElementInterface $element = null): string
     {
         // Register our asset bundle
-		// Craft::$app->getView()->registerAssetBundle(BarcodeFieldFieldAsset::class);
-		/*if (!$value) {
-			
-		}*/
+        // Craft::$app->getView()->registerAssetBundle(BarcodeFieldFieldAsset::class);
+        /*if (!$value) {
+
+        }*/
 
         // Get our id and namespace
         $id = Craft::$app->getView()->formatInputId($this->handle);
@@ -146,6 +146,6 @@ class BarcodeField extends Field
                 'namespacedId' => $namespacedId,
             ]
         );
-	}
-	
+    }
+
 }

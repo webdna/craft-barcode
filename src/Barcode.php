@@ -4,16 +4,16 @@
  *
  * Generate a barcode
  *
- * @link      https://kurious.agency
- * @copyright Copyright (c) 2019 Kurious Agency
+ * @link      https://webdna.co.uk
+ * @copyright Copyright (c) 2019 webdna
  */
 
-namespace kuriousagency\barcode;
+namespace webdna\barcode;
 
-use kuriousagency\barcode\services\BarcodeService;
-use kuriousagency\barcode\variables\BarcodeVariable;
-use kuriousagency\barcode\twigextensions\BarcodeTwigExtension;
-use kuriousagency\barcode\fields\BarcodeField;
+use webdna\barcode\services\BarcodeService;
+use webdna\barcode\variables\BarcodeVariable;
+use webdna\barcode\twigextensions\BarcodeTwigExtension;
+use webdna\barcode\fields\BarcodeField;
 
 use Craft;
 use craft\base\Plugin;
@@ -28,7 +28,7 @@ use yii\base\Event;
 /**
  * Class Barcode
  *
- * @author    Kurious Agency
+ * @author    webdna
  * @package   Barcode
  * @since     0.0.1
  *
@@ -50,7 +50,7 @@ class Barcode extends Plugin
     /**
      * @var string
      */
-    public $schemaVersion = '0.0.1';
+    public string $schemaVersion = '0.0.1';
 
     // Public Methods
     // =========================================================================
@@ -61,11 +61,11 @@ class Barcode extends Plugin
     public function init()
     {
         parent::init();
-		self::$plugin = $this;
-		
-		$this->setComponents([
-			'service' => BarcodeService::class,
-		]);
+        self::$plugin = $this;
+
+        $this->setComponents([
+            'service' => BarcodeService::class,
+        ]);
 
         Craft::$app->view->registerTwigExtension(new BarcodeTwigExtension());
 

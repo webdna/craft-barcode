@@ -4,13 +4,13 @@
  *
  * Generate a barcode
  *
- * @link      https://kurious.agency
- * @copyright Copyright (c) 2019 Kurious Agency
+ * @link      https://webdna.co.uk
+ * @copyright Copyright (c) 2019 webdna
  */
 
-namespace kuriousagency\barcode\services;
+namespace webdna\barcode\services;
 
-use kuriousagency\barcode\Barcode;
+use webdna\barcode\Barcode;
 
 use Picqer\Barcode\BarcodeGeneratorSVG;
 use Picqer\Barcode\BarcodeGeneratorPNG;
@@ -18,12 +18,14 @@ use Picqer\Barcode\Exceptions\BarcodeException;
 use Picqer\Barcode\Exceptions\InvalidCharacterException;
 use Picqer\Barcode\Exceptions\InvalidCheckDigitException;
 
+use Twig\Markup;
+
 use Craft;
 use craft\base\Component;
 use craft\helpers\Template;
 
 /**
- * @author    Kurious Agency
+ * @author    webdna
  * @package   Barcode
  * @since     0.0.1
  */
@@ -35,75 +37,75 @@ class BarcodeService extends Component
     /*
      * @return mixed
      */
-    public function generate($number, $type='EAN13', $width=2, $height=30, $color='#000000')
-    {	
-		return $this->generateSVG($number, $type, $width, $height, $color);
-	}
-	
-	public function generateSVG($number, $type='EAN13', $width=2, $height=30, $color='#000000')
+    public function generate($number, $type='EAN13', $width=2, $height=30, $color='#000000'): Markup
     {
-		if ($type == 'EANUPC') {
-			$image = $this->getBarcodeSVG($number, $type, $width, $height, $color);
-		} else {
-			$generator = new BarcodeGeneratorSVG();
-			$image = $generator->getBarcode($number, $type, $width, $height, $color);
-		}
-		
-		return Template::raw($image);
-	}
+        return $this->generateSVG($number, $type, $width, $height, $color);
+    }
 
-	public function generatePNG($number, $type='EAN13', $width=2, $height=30, $color='#000000')
+    public function generateSVG($number, $type='EAN13', $width=2, $height=30, $color='#000000'): Markup
     {
-		$color = sscanf($color, "#%02x%02x%02x");
+        if ($type == 'EANUPC') {
+            $image = $this->getBarcodeSVG($number, $type, $width, $height, $color);
+        } else {
+            $generator = new BarcodeGeneratorSVG();
+            $image = $generator->getBarcode($number, $type, $width, $height, $color);
+        }
 
-		if ($type == 'EANUPC') {
-			$image = $this->getBarcodePNG($number, $type, $width, $height, $color);
-		} else {
-			$generator = new BarcodeGeneratorPNG();
-			$image = $generator->getBarcode($number, $type, $width, $height, $color);
-		}
-		
-		return Template::raw("data:image/png;base64," . base64_encode($image));
-	}
+        return Template::raw($image);
+    }
 
-	public function getTypes()
-	{
-		return [
-			'C39' => 'CODE_39',
-			'C39+' => 'CODE_39_CHECKSUM',
-			'C39E' => 'CODE_39E',
-			'C39E+' => 'CODE_39E_CHECKSUM',
-			'C93' => 'CODE_93',
-			'S25' => 'STANDARD_2_5',
-			'S25+' => 'STANDARD_2_5_CHECKSUM',
-			'I25' => 'INTERLEAVED_2_5',
-			'I25+' => 'INTERLEAVED_2_5_CHECKSUM',
-			'C128' => 'CODE_128',
-			'C128A' => 'CODE_128_A',
-			'C128B' => 'CODE_128_B',
-			'C128C' => 'CODE_128_C',
-			'EAN2' => 'EAN_2',
-			'EAN5' => 'EAN_5',
-			'EAN8' => 'EAN_8',
-			'EAN13' => 'EAN_13',
-			'UPCA' => 'UPC_A',
-			'UPCE' => 'UPC_E',
-			'EANUPC' => 'EANUPC',
-			'MSI' => 'MSI',
-			'MSI+' => 'MSI_CHECKSUM',
-			'POSTNET' => 'POSTNET',
-			'PLANET' => 'PLANET',
-			'RMS4CC' => 'RMS4CC',
-			'KIX' => 'KIX',
-			'IMB' => 'IMB',
-			'CODABAR' => 'CODABAR',
-			'CODE11' => 'CODE_11',
-			'PHARMA' => 'PHARMA_CODE',
-			'PHARMA2T' => 'PHARMA_CODE_TWO_TRACKS',
-		];
-	}
+    public function generatePNG($number, $type='EAN13', $width=2, $height=30, $color='#000000'): Markup
+    {
+        $color = sscanf($color, "#%02x%02x%02x");
 
-	private function getBarcodePNG($code, $type, $widthFactor = 2, $totalHeight = 30, $color = array(0, 0, 0))
+        if ($type == 'EANUPC') {
+            $image = $this->getBarcodePNG($number, $type, $width, $height, $color);
+        } else {
+            $generator = new BarcodeGeneratorPNG();
+            $image = $generator->getBarcode($number, $type, $width, $height, $color);
+        }
+
+        return Template::raw("data:image/png;base64," . base64_encode($image));
+    }
+
+    public function getTypes(): array
+    {
+        return [
+            'C39' => 'CODE_39',
+            'C39+' => 'CODE_39_CHECKSUM',
+            'C39E' => 'CODE_39E',
+            'C39E+' => 'CODE_39E_CHECKSUM',
+            'C93' => 'CODE_93',
+            'S25' => 'STANDARD_2_5',
+            'S25+' => 'STANDARD_2_5_CHECKSUM',
+            'I25' => 'INTERLEAVED_2_5',
+            'I25+' => 'INTERLEAVED_2_5_CHECKSUM',
+            'C128' => 'CODE_128',
+            'C128A' => 'CODE_128_A',
+            'C128B' => 'CODE_128_B',
+            'C128C' => 'CODE_128_C',
+            'EAN2' => 'EAN_2',
+            'EAN5' => 'EAN_5',
+            'EAN8' => 'EAN_8',
+            'EAN13' => 'EAN_13',
+            'UPCA' => 'UPC_A',
+            'UPCE' => 'UPC_E',
+            'EANUPC' => 'EANUPC',
+            'MSI' => 'MSI',
+            'MSI+' => 'MSI_CHECKSUM',
+            'POSTNET' => 'POSTNET',
+            'PLANET' => 'PLANET',
+            'RMS4CC' => 'RMS4CC',
+            'KIX' => 'KIX',
+            'IMB' => 'IMB',
+            'CODABAR' => 'CODABAR',
+            'CODE11' => 'CODE_11',
+            'PHARMA' => 'PHARMA_CODE',
+            'PHARMA2T' => 'PHARMA_CODE_TWO_TRACKS',
+        ];
+    }
+
+    private function getBarcodePNG($code, $type, $widthFactor = 2, $totalHeight = 30, $color = array(0, 0, 0)): ?string
     {
         $barcodeData = $this->getBarcodeData($code, strlen($code));
 
@@ -157,9 +159,9 @@ class BarcodeService extends Component
         $image = ob_get_clean();
 
         return $image;
-	}
-	
-	private function getBarcodeSVG($code, $type, $widthFactor = 2, $totalHeight = 30, $color = 'black')
+    }
+
+    private function getBarcodeSVG($code, $type, $widthFactor = 2, $totalHeight = 30, $color = 'black'): string
     {
         $barcodeData = $this->getBarcodeData($code, strlen($code));
 
@@ -191,9 +193,9 @@ class BarcodeService extends Component
         return $svg;
     }
 
-	private function getBarcodeData($code, $len=13)
-	{
-		$upce = false;
+    private function getBarcodeData($code, $len=13): array
+    {
+        $upce = false;
         if ($len == 6) {
             $len = 12; // UPC-A
             $upce = true; // UPC-E mode
@@ -205,14 +207,14 @@ class BarcodeService extends Component
         // calculate check digit
         $sum_a = 0;
         for ($i = 1; $i < $data_len; $i += 2) {
-            $sum_a += $code{$i};
+            $sum_a += $code[$i];
         }
         if ($len > 12) {
             $sum_a *= 3;
         }
         $sum_b = 0;
         for ($i = 0; $i < $data_len; $i += 2) {
-            $sum_b += ($code{$i});
+            $sum_b += ($code[$i]);
         }
         if ($len < 13) {
             $sum_b *= 3;
@@ -224,7 +226,7 @@ class BarcodeService extends Component
         if ($code_len == $data_len) {
             // add check digit
             $code .= $r;
-        } elseif ($r !== intval($code{$data_len})) {
+        } elseif ($r !== intval($code[$data_len])) {
             throw new InvalidCheckDigitException();
         }
         if ($len == 12) {
@@ -337,7 +339,7 @@ class BarcodeService extends Component
             $bararray = array('code' => $upce_code, 'maxw' => 0, 'maxh' => 1, 'bcode' => array());
             $p = $upce_parities[$code[1]][$r];
             for ($i = 0; $i < 6; ++$i) {
-                $seq .= $codes[$p[$i]][$upce_code{$i}];
+                $seq .= $codes[$p[$i]][$upce_code[$i]];
             }
             $seq .= '010101'; // right guard bar
         } else {
@@ -345,20 +347,20 @@ class BarcodeService extends Component
             $half_len = intval(ceil($len / 2));
             if ($len == 8) {
                 for ($i = 0; $i < $half_len; ++$i) {
-                    $seq .= $codes['A'][$code{$i}];
+                    $seq .= $codes['A'][$code[$i]];
                 }
             } else {
                 $p = $parities[$code[0]];
                 for ($i = 1; $i < $half_len; ++$i) {
-                    $seq .= $codes[$p[$i - 1]][$code{$i}];
+                    $seq .= $codes[$p[$i - 1]][$code[$i]];
                 }
             }
             $seq .= '01010'; // center guard bar
             for ($i = $half_len; $i < $len; ++$i) {
-                if ( ! isset($codes['C'][$code{$i}])) {
-                    throw new InvalidCharacterException('Char ' . $code{$i} . ' not allowed');
+                if ( ! isset($codes['C'][$code[$i]])) {
+                    throw new InvalidCharacterException('Char ' . $code[$i] . ' not allowed');
                 }
-                $seq .= $codes['C'][$code{$i}];
+                $seq .= $codes['C'][$code[$i]];
             }
             $seq .= '101'; // right guard bar
         }
@@ -366,8 +368,8 @@ class BarcodeService extends Component
         $w = 0;
         for ($i = 0; $i < $clen; ++$i) {
             $w += 1;
-            if (($i == ($clen - 1)) OR (($i < ($clen - 1)) AND ($seq{$i} != $seq{($i + 1)}))) {
-                if ($seq{$i} == '1') {
+            if (($i == ($clen - 1)) OR (($i < ($clen - 1)) AND ($seq[$i] != $seq[($i + 1)]))) {
+                if ($seq[$i] == '1') {
                     $t = true; // bar
                 } else {
                     $t = false; // space
@@ -379,16 +381,16 @@ class BarcodeService extends Component
             }
         }
 
-		//return $bararray;
-		
-		if ( ! isset($bararray['maxWidth'])) {
+        //return $bararray;
+
+        if ( ! isset($bararray['maxWidth'])) {
             $bararray = $this->convertBarcodeArrayToNewStyle($bararray);
         }
 
         return $bararray;
-	}
+    }
 
-	private function convertBarcodeArrayToNewStyle($oldBarcodeArray)
+    private function convertBarcodeArrayToNewStyle($oldBarcodeArray): array
     {
         $newBarcodeArray = [];
         $newBarcodeArray['code'] = $oldBarcodeArray['code'];

@@ -4,18 +4,18 @@
  *
  * Generate a barcode
  *
- * @link      https://kurious.agency
- * @copyright Copyright (c) 2019 Kurious Agency
+ * @link      https://webdna.co.uk
+ * @copyright Copyright (c) 2019 webdna
  */
 
-namespace kuriousagency\barcode\assetbundles\barcodefieldfield;
+namespace webdna\barcode\assetbundles\barcodefieldfield;
 
 use Craft;
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
 
 /**
- * @author    Kurious Agency
+ * @author    webdna
  * @package   Barcode
  * @since     0.0.1
  */
@@ -29,7 +29,7 @@ class BarcodeFieldFieldAsset extends AssetBundle
      */
     public function init()
     {
-        $this->sourcePath = "@kuriousagency/barcode/assetbundles/barcodefieldfield/dist";
+        $this->sourcePath = "@webdna/barcode/assetbundles/barcodefieldfield/dist";
 
         $this->depends = [
             CpAsset::class,

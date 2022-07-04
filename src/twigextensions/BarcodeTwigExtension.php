@@ -4,22 +4,25 @@
  *
  * Generate a barcode
  *
- * @link      https://kurious.agency
- * @copyright Copyright (c) 2019 Kurious Agency
+ * @link      https://webdna.co.uk
+ * @copyright Copyright (c) 2019 webdna
  */
 
-namespace kuriousagency\barcode\twigextensions;
+namespace webdna\barcode\twigextensions;
 
-use kuriousagency\barcode\Barcode;
+use webdna\barcode\Barcode;
 
 use Craft;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 /**
- * @author    Kurious Agency
+ * @author    webdna
  * @package   Barcode
  * @since     0.0.1
  */
-class BarcodeTwigExtension extends \Twig_Extension
+class BarcodeTwigExtension extends AbstractExtension
 {
     // Public Methods
     // =========================================================================
@@ -27,7 +30,7 @@ class BarcodeTwigExtension extends \Twig_Extension
     /**
      * @inheritdoc
      */
-    public function getName()
+    public function getName(): string
     {
         return 'Barcode';
     }
@@ -35,20 +38,20 @@ class BarcodeTwigExtension extends \Twig_Extension
     /**
      * @inheritdoc
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
-            new \Twig_SimpleFilter('barcode', [$this, 'generate']),
+            new TwigFilter('barcode', [$this, 'generate']),
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('barcode', [$this, 'generate']),
+            new TwigFunction('barcode', [$this, 'generate']),
         ];
     }
 
@@ -57,17 +60,17 @@ class BarcodeTwigExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function generate($number, $format="svg", $type='EAN13', $width=2, $height=30, $color='#000000')
+    public function generate($number, $format="svg", $type='EAN13', $width=2, $height=30, $color='#000000'): string
     {
         if (!$number) {
-			return '';
-		}
+            return '';
+        }
 
-		if ($format == 'svg') {
-			return Barcode::$plugin->service->generateSVG($number, $type, $width, $height, $color);
-		}
-		if ($format == 'png') {
-			return Barcode::$plugin->service->generatePNG($number, $type, $width, $height, $color);
-		}
+        if ($format == 'svg') {
+            return Barcode::$plugin->service->generateSVG($number, $type, $width, $height, $color);
+        }
+        if ($format == 'png') {
+            return Barcode::$plugin->service->generatePNG($number, $type, $width, $height, $color);
+        }
     }
 }
