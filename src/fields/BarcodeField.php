@@ -77,7 +77,7 @@ class BarcodeField extends Field
     /**
      * @inheritdoc
      */
-    public function normalizeValue($value, ElementInterface $element = null): mixed
+    public function normalizeValue(mixed $value, ?ElementInterface $element = null): mixed
     {
         $type = explode('\\',get_class($element));
         $type = strtolower(end($type));
@@ -90,7 +90,7 @@ class BarcodeField extends Field
     /**
      * @inheritdoc
      */
-    public function serializeValue($value, ElementInterface $element = null): mixed
+    public function serializeValue(mixed $value, ?ElementInterface $element = null): mixed
     {
         return parent::serializeValue($value, $element);
     }
@@ -113,7 +113,7 @@ class BarcodeField extends Field
     /**
      * @inheritdoc
      */
-    public function getInputHtml($value, ElementInterface $element = null): string
+    public function getInputHtml(mixed $value, ?ElementInterface $element = null): string
     {
         // Register our asset bundle
         // Craft::$app->getView()->registerAssetBundle(BarcodeFieldFieldAsset::class);

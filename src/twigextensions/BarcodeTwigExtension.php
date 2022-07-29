@@ -60,7 +60,7 @@ class BarcodeTwigExtension extends AbstractExtension
      *
      * @return string
      */
-    public function generate($number, $format="svg", $type='EAN13', $width=2, $height=30, $color='#000000'): string
+    public function generate(string $number, ?string $format = "svg", ?string $type = 'EAN13', ?int $width = 2, ?int $height = 30, ?string $color = '#000000'): string
     {
         if (!$number) {
             return '';

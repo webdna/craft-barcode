@@ -37,12 +37,12 @@ class BarcodeService extends Component
     /*
      * @return mixed
      */
-    public function generate($number, $type='EAN13', $width=2, $height=30, $color='#000000'): Markup
+    public function generate(string $number, ?string $type = 'EAN13', ?int $width = 2, ?int $height = 30, ?string $color = '#000000'): Markup
     {
         return $this->generateSVG($number, $type, $width, $height, $color);
     }
 
-    public function generateSVG($number, $type='EAN13', $width=2, $height=30, $color='#000000'): Markup
+    public function generateSVG(string $number, ?string $type = 'EAN13', ?int $width = 2, ?int $height = 30, ?string $color = '#000000'): Markup
     {
         if ($type == 'EANUPC') {
             $image = $this->getBarcodeSVG($number, $type, $width, $height, $color);
@@ -54,7 +54,7 @@ class BarcodeService extends Component
         return Template::raw($image);
     }
 
-    public function generatePNG($number, $type='EAN13', $width=2, $height=30, $color='#000000'): Markup
+    public function generatePNG(string $number, ?string $type = 'EAN13', ?int $width = 2, ?int $height = 30, ?string $color = '#000000'): Markup
     {
         $color = sscanf($color, "#%02x%02x%02x");
 
@@ -105,7 +105,7 @@ class BarcodeService extends Component
         ];
     }
 
-    private function getBarcodePNG($code, $type, $widthFactor = 2, $totalHeight = 30, $color = array(0, 0, 0)): ?string
+    private function getBarcodePNG(string $code, string $type, ?int $widthFactor = 2, ?int $totalHeight = 30, ?array $color = array(0, 0, 0)): ?string
     {
         $barcodeData = $this->getBarcodeData($code, strlen($code));
 
@@ -161,7 +161,7 @@ class BarcodeService extends Component
         return $image;
     }
 
-    private function getBarcodeSVG($code, $type, $widthFactor = 2, $totalHeight = 30, $color = 'black'): string
+    private function getBarcodeSVG(string $code, string $type, ?int $widthFactor = 2, ?int $totalHeight = 30, ?string $color = 'black'): string
     {
         $barcodeData = $this->getBarcodeData($code, strlen($code));
 
@@ -193,7 +193,7 @@ class BarcodeService extends Component
         return $svg;
     }
 
-    private function getBarcodeData($code, $len=13): array
+    private function getBarcodeData(string $code, ?int $len = 13): array
     {
         $upce = false;
         if ($len == 6) {
@@ -390,7 +390,7 @@ class BarcodeService extends Component
         return $bararray;
     }
 
-    private function convertBarcodeArrayToNewStyle($oldBarcodeArray): array
+    private function convertBarcodeArrayToNewStyle(array $oldBarcodeArray): array
     {
         $newBarcodeArray = [];
         $newBarcodeArray['code'] = $oldBarcodeArray['code'];
