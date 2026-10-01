@@ -27,7 +27,7 @@ class BarcodeVariable
 
 	public function generate(string $number, ?string $format = 'svg', ?string $type = 'EAN13', ?int $width = 2, ?int $height = 30, ?string $color = '#000000'): string
 	{
-		if ($format == 'svg') {
+		if ($format !== 'png') {
 			return Barcode::$plugin->service->generateSVG($number, $type, $width, $height, $color);
 		}
 		if ($format == 'png') {

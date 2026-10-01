@@ -66,7 +66,7 @@ class BarcodeTwigExtension extends AbstractExtension
             return '';
         }
 
-        if ($format == 'svg') {
+        if ($format !== 'png') {
             return Barcode::$plugin->service->generateSVG($number, $type, $width, $height, $color);
         }
         if ($format == 'png') {

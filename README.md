@@ -1,10 +1,10 @@
-# Barcode plugin for Craft CMS 4.x
+# Barcode plugin for Craft CMS 5.x
 
 Generate a barcode
 
 ## Requirements
 
-This plugin requires Craft CMS 4.0.0 or later.
+This plugin requires Craft CMS 5.0.0 or later.
 
 ## Installation
 

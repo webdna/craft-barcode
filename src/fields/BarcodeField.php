@@ -33,7 +33,7 @@ class BarcodeField extends Field
     /**
      * @var string
      */
-    public $property;
+    public $property = '';
     public $type = 'EAN13';
     public $width = 2;
     public $height = 30;
@@ -48,6 +48,14 @@ class BarcodeField extends Field
     public static function displayName(): string
     {
         return Craft::t('barcode', 'Barcode');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function icon(): string
+    {
+        return __DIR__ . '/../assetbundles/barcodefieldfield/dist/img/BarcodeField-icon.svg';
     }
 
     // Public Methods
@@ -79,12 +87,24 @@ class BarcodeField extends Field
      */
     public function normalizeValue(mixed $value, ?ElementInterface $element = null): mixed
     {
-        $type = explode('\\',get_class($element));
-        $type = strtolower(end($type));
-        $number = Craft::$app->getView()->renderString($this->property, [$type=>$element]);
-        $value = Barcode::$plugin->service->generateSVG($number);
+        // Craft 5 normalizes some values with no element (previews, condition rules), so only pass one when there is one.
+        $variables = [];
+        if ($element !== null) {
+            $typeParts = explode('\\', get_class($element));
+            $variables[strtolower(end($typeParts))] = $element;
+        }
 
-        return $value;
+        try {
+            $number = trim(Craft::$app->getView()->renderString((string)$this->property, $variables));
+            if ($number === '') {
+                return null;
+            }
+            return Barcode::$plugin->service->generateSVG($number);
+        } catch (\Throwable $e) {
+            // A template error, or a number the barcode type can't encode, must not take the element's page down with it.
+            Craft::$app->getErrorHandler()->logException($e);
+            return null;
+        }
     }
 
     /**
