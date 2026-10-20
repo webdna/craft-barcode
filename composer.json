@@ -35,7 +35,7 @@
 		"handle": "barcode",
 		"hasCpSettings": false,
 		"hasCpSection": false,
-		"changelogUrl": "https://raw.githubusercontent.com/webdna/craft-barcode/master/CHANGELOG.md",
+		"changelogUrl": "https://raw.githubusercontent.com/webdna/craft-barcode/craft5/CHANGELOG.md",
 		"class": "webdna\\barcode\\Barcode"
 	}
 }
