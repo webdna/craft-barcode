@@ -64,12 +64,28 @@ class BarcodeField extends Field
     /**
      * @inheritdoc
      */
+    public function init(): void
+    {
+        parent::init();
+
+        // Craft's colour input posts the hex without its '#'.
+        if (is_string($this->color) && $this->color !== '') {
+            $this->color = '#' . ltrim($this->color, '#');
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function rules(): array
     {
         $rules = parent::rules();
         $rules = array_merge($rules, [
             ['property', 'string'],
             ['property', 'required'],
+            ['type', 'in', 'range' => array_keys(Barcode::$plugin->service->getTypes())],
+            [['width', 'height'], 'integer', 'min' => 1],
+            ['color', 'match', 'pattern' => '/^#[0-9a-f]{6}$/i'],
         ]);
         return $rules;
     }
@@ -99,7 +115,13 @@ class BarcodeField extends Field
             if ($number === '') {
                 return null;
             }
-            return Barcode::$plugin->service->generateSVG($number);
+            return Barcode::$plugin->service->generateSVG(
+                $number,
+                $this->type ?: 'EAN13',
+                (int)$this->width ?: 2,
+                (int)$this->height ?: 30,
+                $this->color ?: '#000000'
+            );
         } catch (\Throwable $e) {
             // A template error, or a number the barcode type can't encode, must not take the element's page down with it.
             Craft::$app->getErrorHandler()->logException($e);

@@ -4,11 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 3.0.0 - Unreleased
+## 3.0.0 - 2026-10-20
 ### Changed
 - Craft CMS 5 compatibility (requires Craft 5 and PHP 8.2). Allows `picqer/php-barcode-generator` 3.x.
+- The field’s settings are validated: the type must be one of the supported types, the width ratio and height whole numbers of at least 1, and the colour a six-digit hex value.
 
 ### Fixed
+- The Barcode field now uses its own Type, Width Ratio, Height and Color settings. Previously every field rendered an EAN-13 barcode at the defaults, whatever it was set to.
+- The field’s colour is saved with its `#`, so it reaches the barcode as a valid colour.
 - The field no longer errors when Craft normalizes its value without an element.
 - A template error, an empty number, or a number the barcode type cannot encode now gives the field no value (and is logged) instead of an error page.
 - `generate()` with a format other than `png` returns SVG instead of nothing.
