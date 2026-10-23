@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.0.1 - 2026-10-23
+### Changed
+- New plugin icon: a white glyph on a black circle, with a white icon mask for the control panel nav.
+
 ## 3.0.0 - 2026-10-20
 ### Changed
 - Craft CMS 5 compatibility (requires Craft 5 and PHP 8.2). Allows `picqer/php-barcode-generator` 3.x.
